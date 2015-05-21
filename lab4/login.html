@@ -9,14 +9,21 @@
 		<div style="width: 100%; text-align: center; height: 100%; background-image: url(images/cake.jpg);">
 			<div align="center">
 			<div  id="form_login">
-				<form action="index.php" method="post">
-					<span style="font-size:70px;">Login</span><br><br><br><br><br>
+				<form action="login.php" method="post">
+					<span style="font-size:70px;">Login</span><br><br><br><br>
+					<?php if (!empty($err)): ?>
+						<div class="err">
+							<?php foreach ($err as $e): ?>
+								<?=$e?><br>
+							<?php endforeach; ?>
+						</div>
+					<?php endif; ?>
 					<span style="font-size:40px;">login:</span>
 					<input style="width:150px; font-size:20px;" type="text" name="login" />
 					<span style="font-size:40px;">password:</span>
 					<input style="width:150px; font-size:20px;" type="password" name="password" />
 					<div><br><br><br></div>
-					<input id="login_button" type="submit" name="login" value="Log in"/>
+					<input id="login_button" type="submit" name="log_in" value="Log in"/>
 				</form>	
 			</div>
 			</div>

@@ -11,10 +11,14 @@
 
 
 	<body>
+
 		<div style="position: absolute; right: 0; top: 0; padding: 10px" align="right">
-        		<a href="login.php">Log in</a>
-        		|
-        		<a href="signup.php">Sign up</a>
+			
+			<?php if(isset($_SESSION['uid'])): ?>
+				<h3 style="color: #fff;">Hello, <?=$_SESSION['ulogin']?> | <a href="logout.php">Logout</a></h3>
+			<?php else: ?>
+        		<h3 style="color: #fff;"><a href="login.php">Log in</a> | <a href="signup.php">Sign up</a></h3>
+        	<?php endif; ?>
         </div>
         <div id="header">Recipe base</div>
 		<div id="content">
@@ -33,17 +37,23 @@
                      				<form action="index.php" method="post">
 
                      					<?php $titles = getTitles($dbcnx);?>
-                     					<?php foreach ($titles as $value) :?>
-                        					<hr><table><tr><td><h1 id="title" style="position: static; left: 0"><?=$value?></h1></td>
-                        					<input type="hidden" name="title_names[]" value="<?=$value?>">
-                        					<td><input style="position:static; left:0;" type="submit" name="delete['0']" value="DELETE"/></td>
-                        					<td><a href="edit.php?title=<?=$value?>">edit</a></td></tr></table>
+                     					<?php for ($ti = 0; $ti < count($titles); $ti++) :?>
+                        					<hr><table><tr><td><h1 id="title" style="position: static; left: 0"><?=$titles[$ti]?></h1></td>
+                        					<input type="hidden" name="title_names[]" value="<?=$titles[$ti]?>">
+                        					<?php if(isset($_SESSION['uid'])): ?>
+                        					    <td><input style="position:static; left:0;" type="submit" name="like[<?=$ti?>]" value="like"/></td>
+                        					    <?php if($_SESSION['isadmin']):?>
+	                        					<td><input style="position:static; left:0;" type="submit" name="delete[<?=$ti?>]" value="DELETE"/></td>
+	                        					<td><a href="edit.php?title=<?=$titles[$ti]?>">edit</a></td>
+	                        					<?php endif;?>
+                        					<?php endif;?>
+                        					</tr></table>
                         					<h3 id="title">Ингредиенты:</h3>
                         					<table id="ing" style="position: static; left: 0">
                         						<?php
-                        							$ingredients = getIngredients($dbcnx, $value);
-                        							$types = getTypes($dbcnx, $value);
-                        							$numbers = getNumbers($dbcnx, $value);
+                        							$ingredients = getIngredients($dbcnx, $titles[$ti]);
+                        							$types = getTypes($dbcnx, $titles[$ti]);
+                        							$numbers = getNumbers($dbcnx, $titles[$ti]);
                         						?>
                         						<?php for($i = 0; $i < count($ingredients); $i++):?>
 	                        						<tr><td width="200px"><?=$ingredients[$i]?></td>
@@ -53,12 +63,12 @@
                         					</table>
                         					<h3 id="title">Приготовление:</h3>
                         					<table id="ing">
-                        						<?php $steps = getSteps($dbcnx, $value);?>
+                        						<?php $steps = getSteps($dbcnx, $titles[$ti]);?>
                         						<?php for($i = 0; $i < count($steps); $i++):?>
                         							<tr><td><?=($i + 1)?>. </td><td><?=$steps[$i]?></td></tr>
                         						<?php endfor;?>
                         					</table>
-                    					<?php endforeach;?>
+                    					<?php endfor;?>
 
                     				</form>
 	                            </div>
@@ -113,6 +123,7 @@
 	                    </div>
 	                </section>
 	        </div> 
+	        <?php if(isset($_SESSION['uid'])): ?>
 	        <div id="right_column"> 
 	        	<section class="tabs">
 	        		<input id="tab_3" type="radio" name="tab2" checked="checked" />
@@ -175,12 +186,32 @@
 		                            </form>
 	                            </div>
 	                        </div>
-	                        
-	                        <div id="tab_c4" style="padding: 10px"></div>
+	                        	<div id="tab_c4" style="padding: 30px">
+	                        		<span id="title" style="position: static; left: 0">Login: </span>
+	                        		<span id="title" style="position: static; left: 0"><?=$_SESSION['ulogin']?></span><br>
+	                        		<span id="title" style="position: static; left: 0">E-mail: </span>
+	                        		<span id="title" style="position: static; left: 0"><?=getUserMail($dbcnx, $_SESSION['uid'])[0]?></span>
+	                        		<hr>
+                    				<h3 id="title" style="position: static; left: 0">My recipes:</h3>
+                    				<?php $titles = getUserTitles($dbcnx, $_SESSION['uid']);?>
+                    				<div align="center">
+             						<?php foreach ($titles as $value) :?>
+                						<span ><?=$value?></span><br>
+                					<?php endforeach;?>
+                					</div>
+                    				<h3 id="title" style="position: static; left: 0">My favorites:</h3>
+                    				<?php $titles = getUserFavorites($dbcnx, $_SESSION['uid']);?>
+                    				<div align="center">
+             						<?php foreach ($titles as $value) :?>
+                						<span ><?=$value?></span><br>
+                					<?php endforeach;?>
+                					</div>
+	                        	</div>
 						</div>
 	        	
 	        	</section>
 	        </div> 
+	        <?php endif;?>
 	    </div>                         
                             
         <div id="footer">

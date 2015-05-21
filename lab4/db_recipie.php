@@ -1,5 +1,6 @@
 <?php
-	
+	session_start();
+
 	function loadBase(){
 		$dblocation = "localhost";
 		$dbuser = "root";
@@ -39,6 +40,17 @@
 		return queryResultToArray($query, 'name');
 	}
 
+	function getUserTitles($dbcnx, $uid){
+		$query = mysql_db_query("recipe_base", "SELECT `recipe`.`name` FROM `recipe` WHERE `recipe`.`user_id` = ".$uid."" , $dbcnx);
+		return queryResultToArray($query, 'name');
+	}
+
+	function getUserFavorites($dbcnx, $uid){
+		$query = mysql_db_query("recipe_base", "SELECT `recipe`.`name` FROM `recipe`, `favorite` WHERE `favorite`.`user_id` = ".$uid." AND".
+								"`favorite`.`recipe_id` = `recipe`.`recipe_id` " , $dbcnx);
+		return queryResultToArray($query, 'name');
+	}
+
 	function getTitlesForTable($dbcnx, $table){
 		$query = mysql_db_query("recipe_base", "SELECT `recipe`.`name` FROM `recipe`, `table_map`, `table`".
 								" WHERE `recipe`.`recipe_id` = `table_map`.`recipe_id` AND `table_map`.`table_id` = `table`.`table_id`".
@@ -73,12 +85,11 @@
 		return queryResultToArray($query, 'text');
 	}
 	
-	function insertRecipe($dbcnx, $title, $table, $ingredient, $number, $types, $steps, $user){
+	function insertRecipe($dbcnx, $title, $table, $ingredient, $number, $types, $steps, $uid){
 		$i = 0;
 
 		$res = mysql_db_query("recipe_base", 
-					       	  "INSERT INTO `recipe_base`.`recipe` (`recipe_id`, `name`, `user_id`) VALUES (NULL, '".$title."', ".
-					       	  "(SELECT `user`.`user_id` FROM `user` WHERE `user`.`login` = '".$user."'))",
+					       	  "INSERT INTO `recipe_base`.`recipe` (`recipe_id`, `name`, `user_id`) VALUES (NULL, '".$title."', ".$uid.")",
 					   		  $dbcnx);
 		if($res == 0){
 			return '<br/>Error sql : ' . "INSERT title.";
@@ -160,6 +171,12 @@
 		
 		return "Success.";
 	}
+	function likeRecipe($dbcnx, $uid, $title){
+		$res = mysql_db_query("recipe_base", 
+					       	  "INSERT INTO `recipe_base`.`favorite` ( `user_id`, `recipe_id`) VALUES (".$uid.", ".
+					       	  "(SELECT `recipe`.`recipe_id` FROM `recipe` WHERE `recipe`.`name` = '".$title."') )",
+					   		  $dbcnx);
+	}
 
 	function userIsExists($dbcnx, $login){
 		$res = mysql_db_query("recipe_base", "SELECT `user`.`login` FROM `user` WHERE". 
@@ -177,6 +194,12 @@
 					       	  "INSERT INTO `recipe_base`.`user` (`user_id`, `login`, `password`, `email`,`is_admin`) VALUES (NULL,".
 					       	  " '".$login."', '".$password."', '".$email."', 0)", $dbcnx);
 	}
+	function getUserMail($dbcnx, $uid){
+		$query = mysql_db_query("recipe_base", "SELECT `user`.`email` FROM `user` ".
+								"WHERE `user`.`user_id` = ".$uid." " , $dbcnx);
+
+		return queryResultToArray($query, 'email');
+	}
 
 	function queryResultToArray($queryResult, $fieldName){
 		$result = [];
@@ -184,5 +207,16 @@
 			array_push($result, $tmp[$fieldName]);	
 		}
 		return $result;
+	}
+
+	function getUser($dbcnx, $login, $password){
+		$query = mysql_db_query("recipe_base", "SELECT `user`.`user_id`, `user`.`login`, `user`.`is_admin` FROM `user` ".
+								"WHERE `user`.`login` = '".$login."' AND `user`.`password`='".md5($password)."'" , $dbcnx);
+
+		if ($query) {
+			return mysql_fetch_array($query);
+		} else {
+			return array();
+		}
 	}
 ?>

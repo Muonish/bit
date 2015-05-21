@@ -48,6 +48,7 @@ body {
 .tabs label {
     color: #555;
     cursor: pointer;
+    font-size: 20px; 
     display: block;
 	float: left;
     width: 150px;
@@ -115,6 +116,7 @@ body {
 }
 
 #title {
+    font-size: 25px; 
     color: #555;
 }
 
