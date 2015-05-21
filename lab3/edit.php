@@ -16,6 +16,7 @@
 	$types = getTypes($dbcnx, $value);
 	$steps = getSteps($dbcnx, $value);
 	include('edit.html');
+	closeBase($dbcnx);
 ?>
 				
 

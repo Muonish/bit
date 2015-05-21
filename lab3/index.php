@@ -36,4 +36,5 @@
 
 	}
 	include("index.html");
+	closeBase($dbcnx);
 ?>

@@ -9,8 +9,15 @@
 		<div style="width: 100%; text-align: center; height: 100%; background-image: url(images/1.jpg);">
 			<div align="center">
 			<div  id="form_signup">
-				<form action="index.php" method="post">
+				<form action="signup.php" method="post">
 					<span style="font-size:70px;">Sign up</span><br><br><br><br>
+					<?php if (!empty($err)): ?>
+						<div class="err">
+							<?php foreach ($err as $e): ?>
+								<?=$e?><br>
+							<?php endforeach; ?>
+						</div>
+					<?php endif; ?>
 					<span style="font-size:40px;">e-mail:</span>
 					<input style="width:150px; font-size:20px;" type="text" name="email" />
 					<span style="font-size:40px;">login:</span>

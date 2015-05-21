@@ -181,3 +181,9 @@ body {
 #signup_button:hover {
     color: blue;
 }
+
+.err {
+    text-align: center;
+    font: bold 12pt sans-serif;
+    color: red;
+}
