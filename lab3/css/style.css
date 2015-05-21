@@ -1,0 +1,183 @@
+body { 
+	margin: 0; 
+	padding: 0; 
+	font: 12pt sans-serif;  
+}
+#header {
+    line-height: 50px;
+    text-align: center;
+    line-height: 200px;
+    height: 200px;
+    padding: 0px;
+    background-image: url(../images/bg.jpg);
+    font-size:70px;
+    color:#fff;
+    width: 100%;
+}
+#left_column{
+	float: left;
+	//height: 100%;
+	background: #EEEEE0; 
+	//#F0F8FF - blue;
+	color: #000;
+	width: 69%;
+}
+#right_column {
+	float: right;
+	display: inline;
+	//height: 100%;
+	background: #EEEEE0;
+	color: #000;
+	width: 29%;
+}
+#content{
+    color: #fff;
+    background: #EEEEE0;
+    width: 100%;
+    overflow: hidden;
+}           
+
+.tabs {
+	//position: relative;
+    margin: 0 auto;
+	//width: 800px;
+    width: 100%;
+    background: #EEEEE0;
+	//height: 100%;
+}
+.tabs label {
+    color: #555;
+    cursor: pointer;
+    display: block;
+	float: left;
+    width: 150px;
+    height: 45px;
+	line-height: 45px;
+    position: relative;
+    top: 2px;
+    text-align: center;
+}
+
+.tabs input {
+    position: absolute;
+    left: -9999px;
+}
+
+#tab_1:checked  ~ #tab_l1,
+#tab_2:checked  ~ #tab_l2 {
+    background: #fff;
+    border-color: #fff;
+    top: 1;
+    z-index: 3;
+}
+
+.tabs_cont {
+    background: #fff;
+    position: relative;
+	z-index: 2;
+	//height: 230px;
+	//height: 100%;
+}
+.tabs_cont > div {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    opacity: 0;
+	-moz-transition: opacity .5s ease-in-out;
+	-webkit-transition: opacity .5s ease-in-out;
+    transition: opacity .5s ease-in-out;
+}
+#tab_1:checked ~ .tabs_cont #tab_c1,
+#tab_2:checked ~ .tabs_cont #tab_c2 {
+    position: static;
+    left: 0;
+    opacity: 1;
+}
+
+#tab_3:checked  ~ #tab_l3,
+#tab_4:checked  ~ #tab_l4 {
+    background: #fff;
+    border-color: #fff;
+    top: 1;
+    z-index: 3;
+}
+#tab_3:checked ~ .tabs_cont #tab_c3,
+#tab_4:checked ~ .tabs_cont #tab_c4 {
+    position: static;
+    left: 0;
+    opacity: 1;
+}
+
+#table_head {
+	text-align: center;
+	color: #555;
+	font-size:15px;
+}
+
+#title {
+    color: #555;
+}
+
+#ing {
+    padding: 5px;
+    color: #555;
+}
+
+
+#submit_button{
+	position: relative; 
+    left:0;
+	height: 50px;
+	width: 150px;
+	padding: 5px; 
+	margin: 15px
+}
+
+#footer {
+    line-height: 50px;
+    text-align: center;
+    background: #2F4F4F;
+    color: #fff;
+    width: 100%;
+            }
+
+#form_login{
+    width: 350px;
+    height: 400px;
+    text-align: right;
+    padding: 30px;
+    color:#555;
+    background: #EEEEE0; 
+    opacity:0.9;
+}
+#login_button{
+    padding:10px;
+    font: 40px sans-serif; 
+    line-height: 40px; 
+    border: none; 
+    width: 50%;
+    vertical-align:bottom;
+}
+#login_button:hover {
+    color: pink;
+}
+#form_signup{
+    width: 350px;
+    height: 450px;
+    text-align: right;
+    padding: 30px;
+    color:#555;
+    background: #F0F8FF; 
+    opacity:0.9;
+}
+#signup_button{
+    padding:10px;
+    font: 40px sans-serif; 
+    line-height: 40px; 
+    border: none; 
+    width: 50%;
+    vertical-align:bottom;
+}
+#signup_button:hover {
+    color: blue;
+}

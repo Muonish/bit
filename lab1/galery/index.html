@@ -1,0 +1,25 @@
+<head>
+	<meta charset="utf-8" />
+	<title>Galereya</title>
+    <link href="css/jquery.galereya.css" rel="stylesheet"/>
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" href="css/jquery.galereya.ie.css">
+    <![endif]-->
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.galereya.min.js"></script>
+    <script>
+                    $(function() {
+                $('#gallery').galereya({
+                    load: function(next) {
+                        $.getJSON('images.json', function(data) {
+                            next(data);
+                        });
+                    }
+                });
+            });
+    </script>
+</head>
+<body>
+    <div id="gallery"></div>
+</body>

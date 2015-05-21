@@ -1,0 +1,44 @@
+<html>
+	<head/Library/WebServer/Documents/bit/lab3/index.php>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="css/style.css">
+		<title>Edit</title>
+
+	</head>
+<body>
+		<div style="padding: 30px;">
+			<form action="index.php" method="post">
+
+				<hr><div><input type="text" name="title" value="<?=$value?>"></div>
+				<hr><div><input type="hidden" name="title_hid" value="<?=$value?>"></div>
+				<h3 id="title">Ингредиенты:</h3>
+				<table id="ing">
+					<?php for($i = 0; $i < count($ingredients); $i++):?>
+					<tr><td width="200px"><input type="text" name="ingredients[]" value="<?=$ingredients[$i]?>">
+					<div><input type="hidden" name="ingredients_hid[]" value="<?=$ingredients[$i]?>"></div>
+					</td><td><input type="text" name="numbers[]" value="<?=$numbers[$i]?>">
+					<div><input type="hidden" name="numbers_hid[]" value="<?=$numbers[$i]?>"></div></td><td>
+					<?php	$type_mas = getAllTypes($dbcnx); ?>
+	                                    			
+						<select id="types" style="position: static; left: 0;" name="types[]">
+						<?php foreach($type_mas as $type):?>
+							<option value="<?=$type?>"><?=$type?></option>
+						<?php endforeach;?>
+						</select>
+						</td></tr>
+				<?php endfor; ?>
+				</table>
+				<h3 id="title">Приготовление:</h3>
+				<table id="ing">
+				<?php for($i = 0; $i < count($steps); $i++):?>
+					<tr><td><?=($i + 1)?></td><td><input style="position: static; left: 0; width:200px" type="text" name="steps[]" value="<?=$steps[$i]?>">
+					<input style="position: static; left: 0; width:200px" type="hidden" name="steps_hid[]" value="<?=$steps[$i]?>">
+					<div><input type="hidden" name="steps_hid[]" value="<?=$steps[$i]?>"></div></td></tr>
+				<?php endfor;?>
+				</table>
+				<input type="submit" name="editbtn" value="EDIT">
+			</form>	
+		</div>	
+
+	</body>
+</html>
