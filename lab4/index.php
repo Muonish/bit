@@ -3,12 +3,12 @@
 	$dbcnx = loadBase();
 	$uid = $_SESSION['uid'];
 	if (isset($_POST['sub'])){
-		$title = $_POST['title'];
-		$table = $_POST['table'];
-		$ingredient = $_POST['ingredient'];
-		$number = $_POST['number'];
-		$types = $_POST['types'];
-		$steps = $_POST['steps'];
+		$title = quote($_POST['title']);
+		$table = quote($_POST['table']);
+		$ingredient = quote($_POST['ingredient']);
+		$number = quote($_POST['number']);
+		$types = quote($_POST['types']);
+		$steps = quote($_POST['steps']);
 		
 
 		if (!empty($title) && !empty($table) && !empty($ingredient) && count($ingredient) == count($number) &&
@@ -31,12 +31,12 @@
 	}
 
 	if(isset($_POST['editbtn'])){
-		$title = $_POST['title'];
-		$title_hid = $_POST['title_hid'];
-		$ingredient = $_POST['ingredient'];
-		$number = $_POST['number'];
-		$types = $_POST['types'];
-		$steps = $_POST['steps'];
+		$title = quote($_POST['title']);
+		$title_hid = quote($_POST['title_hid']);
+		$ingredient = quote($_POST['ingredient']);
+		$number = quote($_POST['number']);
+		$types = quote($_POST['types']);
+		$steps = quote($_POST['steps']);
 
 		updateRecipe($dbcnx, $title, $title_hid, $table, $ingredient, $number, $types, $steps);
 

@@ -51,6 +51,24 @@
 		return queryResultToArray($query, 'name');
 	}
 
+	function getLikesNumber($dbcnx, $recipe){
+		$query = mysql_db_query("recipe_base", "SELECT `favorite`.`recipe_id` FROM `recipe`, `favorite` ".
+								"WHERE `favorite`.`recipe_id` = `recipe`.`recipe_id` AND".
+								"`recipe`.`name` = '" . $recipe . "' " , $dbcnx);
+		return count(queryResultToArray($query, 'recipe_id'));
+	}
+
+	function isLiked($dbcnx, $recipe, $uid){
+		$query = mysql_db_query("recipe_base", "SELECT `favorite`.`recipe_id` FROM `recipe`, `favorite` ".
+								"WHERE `favorite`.`recipe_id` = `recipe`.`recipe_id` AND".
+								"`recipe`.`name` = '" . $recipe . "' AND `favorite`.`user_id` = ".$uid." " , $dbcnx);
+		if (count(queryResultToArray($query, 'recipe_id')) > 0){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	function getTitlesForTable($dbcnx, $table){
 		$query = mysql_db_query("recipe_base", "SELECT `recipe`.`name` FROM `recipe`, `table_map`, `table`".
 								" WHERE `recipe`.`recipe_id` = `table_map`.`recipe_id` AND `table_map`.`table_id` = `table`.`table_id`".

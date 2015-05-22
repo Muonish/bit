@@ -189,3 +189,35 @@ body {
     font: bold 12pt sans-serif;
     color: red;
 }
+
+@font-face {
+    font-family: Glyphicons-Regular;
+    src: url('../fonts/glyphicons-regular.woff');
+}
+.glyphicons-heart:before {
+    content: "\E013";
+}
+
+.glyphicons {
+    position:static; 
+    left:0;
+    border: none; 
+    background: none;
+    color:#D3D3D3;
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: Glyphicons-Regular;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 1;
+    vertical-align: top;
+    speak: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.glyphicons:hover {
+    color:red;
+}
+

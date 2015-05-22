@@ -41,7 +41,13 @@
                         					<hr><table><tr><td><h1 id="title" style="position: static; left: 0"><?=$titles[$ti]?></h1></td>
                         					<input type="hidden" name="title_names[]" value="<?=$titles[$ti]?>">
                         					<?php if(isset($_SESSION['uid'])): ?>
-                        					    <td><input style="position:static; left:0;" type="submit" name="like[<?=$ti?>]" value="like"/></td>
+                        					    <td><h1>
+                        					    	<button class="glyphicons glyphicons-heart" 
+                        					    	<?php if (isLiked($dbcnx, $titles[$ti], $_SESSION['uid'])) echo 'style="color:red;"';?>
+                        					    	name="like[<?=$ti?>]" >
+                        					    	</button>
+                        					    <span style="font-size: 18px; font: 10pt sans-serif; margin: -10px; color:#D3D3D3;"><?=getLikesNumber($dbcnx, $titles[$ti])?></span>
+                        						</h1></td>
                         					    <?php if($_SESSION['isadmin']):?>
 	                        					<td><input style="position:static; left:0;" type="submit" name="delete[<?=$ti?>]" value="DELETE"/></td>
 	                        					<td><a href="edit.php?title=<?=$titles[$ti]?>">edit</a></td>
