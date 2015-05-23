@@ -4,12 +4,19 @@
 	$uid = $_SESSION['uid'];
 	if (isset($_POST['sub'])){
 		$title = quote($_POST['title']);
-		$table = quote($_POST['table']);
-		$ingredient = quote($_POST['ingredient']);
-		$number = quote($_POST['number']);
-		$types = quote($_POST['types']);
-		$steps = quote($_POST['steps']);
-		
+		$table = $_POST['table'];
+		$ingredient = $_POST['ingredient'];
+		$number = $_POST['number'];
+		$types = $_POST['types'];
+		$steps = $_POST['steps'];
+		for ($i=0; $i < count($ingredient); $i++) {
+			quote($ingredient[$i]);
+			quote($number[$i]);
+			quote($types[$i]);
+		}
+		for ($i=0; $i < count($steps); $i++) {
+			quote($steps[$i]);
+		}
 
 		if (!empty($title) && !empty($table) && !empty($ingredient) && count($ingredient) == count($number) &&
 										count($ingredient) == count($types) && !empty($steps)){
